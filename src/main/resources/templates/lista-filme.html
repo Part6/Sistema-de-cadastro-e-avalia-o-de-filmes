@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+               <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+                <head>
+                   <link rel="stylesheet" th:href="@{/bootstrap.css/bootstrap.min.css}">
+                   <!--<link rel="stylesheet" th:href="@{/css/style.css}" />-->
+                   
+                    <title>Lista de Filmes</title> 
+                </head> 
+                <body>
+                   <header th:insert="navbar.html"></header> 
+                    <h1>Lista de filmes </h1> 
+                    <!--<img th:src="@{/images/fig-37.png}" height="50px">  </img>-->
+                    <p>Filmes Cadastrados:</p>   
+                    <ul>
+
+                        <li th:each="filme : ${filmes}">
+
+                            <a th:href="@{/filmes/{id}(id=${filme.id})}"
+                               th:text="${filme.nome}">
+                            </a>
+
+                        </li>
+
+                   </ul>
+                
+                  <!-- <script th:src="@{/bootstrap.js/bootstrap.min.js}"></script>
+                    <script th:src="@{/js/script.js}"></script> -->
+                </body> 
+                </html> 

@@ -1,0 +1,17 @@
+<!DOCTYPE html> 
+                <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> <!--<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> -->
+                <head> 
+                <title> Filme</title> 
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+                </head> 
+                <body>
+                   <header th:insert="navbar.html"></header> 
+                   
+                    <h1>Ficha Técnica</h1> 
+                    <p>Nome do filme: <span th:text="${analise.filme}"/></p> 
+                    <p>ID: <span th:text="${analise.id}" /></p> 
+                    <p>Análise: <span th:text="${analise.analise}" /></p> 
+                    <p>Nota: <span th:text="${analise.nota}" /></p> 
+                   
+                </body> 
+                </html> 
