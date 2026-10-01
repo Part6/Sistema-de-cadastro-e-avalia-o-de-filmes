@@ -3,11 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.api.filmes.model;
-
+import org.springframework.stereotype.Component; 
 /**
  *
  * @author Desktop
  */
+@Component
 public class Analise {
    private int id;
    private String filme;
