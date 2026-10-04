@@ -3,6 +3,8 @@
                 <head> 
                 <title> Filme</title> 
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+                    <link rel="stylesheet" th:href="@{/bootstrap.css/bootstrap.min.css}">
+                    <link th:href="@{/css/}+${css}+'.css'" rel="stylesheet" type="text/css"/> 
                 </head> 
                 <body>
                    <header th:insert="navbar.html"></header> 
@@ -12,5 +14,6 @@
                     <p>Análise: <span th:text="${analise.analise}" /></p> 
                     <p>Nota: <span th:text="${analise.nota}" /></p> 
                    
+                <script th:src="@{/bootstrap.js/bootstrap.min.js}"></script>
                 </body> 
                 </html> 

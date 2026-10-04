@@ -1,7 +1,9 @@
     <!DOCTYPE html> 
                  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
                 <head> 
-                    <title>Análise do Filme</title> 
+                    <title>Análise do Filme</title>
+                <link rel="stylesheet" th:href="@{/bootstrap.css/bootstrap.min.css}">
+                   <link th:href="@{/css/}+${css}+'.css'" rel="stylesheet" type="text/css"/> 
                 </head> 
                 <body>
                    <header th:insert="navbar.html"></header> 
@@ -16,6 +18,7 @@
                         </div> 
                         <button type="submit">Salvar Alterações</button> 
                     </form> 
+                <script th:src="@{/bootstrap.js/bootstrap.min.js}"></script>
                 </body> 
                 </html> 
 

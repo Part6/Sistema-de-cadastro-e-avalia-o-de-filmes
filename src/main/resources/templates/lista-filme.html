@@ -5,6 +5,8 @@
                    <!--<link rel="stylesheet" th:href="@{/css/style.css}" />-->
                    
                     <title>Lista de Filmes</title> 
+                <link rel="stylesheet" th:href="@{/bootstrap.css/bootstrap.min.css}">
+                <link th:href="@{/css/}+${css}+'.css'" rel="stylesheet" type="text/css"/> 
                 </head> 
                 <body>
                    <header th:insert="navbar.html"></header> 
@@ -34,7 +36,7 @@
                     </li>
 
                 </ul>
-
+                <script th:src="@{/bootstrap.js/bootstrap.min.js}"></script>
                 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                 <script th:src="@{/js/delete.js}"></script>
                

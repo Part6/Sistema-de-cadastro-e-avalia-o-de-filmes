@@ -2,7 +2,9 @@
                 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> <!--<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> -->
                 <head> 
                 <title> Filme</title> 
-                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                    <link rel="stylesheet" th:href="@{/bootstrap.css/bootstrap.min.css}">
+                    <link th:href="@{/css/}+${css}+'.css'" rel="stylesheet" type="text/css"/> 
                 </head> 
                 <body>
                    <header th:insert="navbar.html"></header> 
@@ -46,7 +48,7 @@
                                 Postar analise
                             </button>
                    </a>
-                   
+                    <script th:src="@{/bootstrap.js/bootstrap.min.js}"></script>
                     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                     <script th:src="@{/js/delete.js}"></script>
                    

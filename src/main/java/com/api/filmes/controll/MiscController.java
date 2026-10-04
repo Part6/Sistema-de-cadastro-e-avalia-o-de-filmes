@@ -12,6 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+ 
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpServletResponse;
+import com.api.filmes.model.Preferencia;
+import org.springframework.web.servlet.ModelAndView;
+import jakarta.servlet.http.Cookie;
+import org.springframework.web.bind.annotation.CookieValue;
+
 
 
 @Controller 
@@ -31,8 +40,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
     // =========================
 
     @GetMapping("/cadastro-filme")
-    public String exibirFilme(Model model) {
-
+    public String exibirFilme(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         model.addAttribute("filme", new Filmes());
 
         return "cadastro-filme";
@@ -49,8 +61,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
 
     
     @GetMapping("/cadastro-analise")
-    public String exibirAnalise(Model model) {
-
+    public String exibirAnalise(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         model.addAttribute("analise", new Analise());
 
         return "cadastro-analise";
@@ -69,8 +84,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
     // =========================
 
     @GetMapping("/lista-filme")
-    public String exibirFilmeLista(Model model) {
-
+    public String exibirFilmeLista(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         model.addAttribute("filmes",filmesRepository.findAll());
 
         return "lista-filme";
@@ -82,8 +100,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
     // =========================
 
     @GetMapping("/filmes/{id}")
-    public String detalhesFilme(@PathVariable Integer id,Model model) {
-
+    public String detalhesFilme(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            @PathVariable Integer id,Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         Filmes filme = filmesRepository.findById(id).orElse(null);
 
         model.addAttribute("filme", filme);
@@ -93,8 +114,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
     }
     
     @GetMapping("/analise/{id}")
-    public String detalhesAnalise(@PathVariable Integer id,Model model) {
-
+    public String detalhesAnalise(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            @PathVariable Integer id,Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         Analise analise = analiseRepository.findById(id).orElse(null);
 
         model.addAttribute("analise", analise);
@@ -108,8 +132,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
     // =========================
 
     @GetMapping("/filmes/{id}/editar")
-    public String editarFilme(@PathVariable Integer id,Model model) {
-
+    public String editarFilme(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            @PathVariable Integer id,Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         Filmes filme = filmesRepository
                 .findById(id)
                 .orElse(null);
@@ -120,8 +147,11 @@ public class MiscController { //// http://localhost:8080/lista-filme
     }
     
     @GetMapping("/analise/{id}/editar")
-    public String editarAnalise(@PathVariable Integer id,Model model) {
-
+    public String editarAnalise(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,
+            @PathVariable Integer id,Model model) {
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        
         Analise analise = analiseRepository.findById(id).orElse(null);
 
         model.addAttribute("analise", analise);
@@ -132,7 +162,7 @@ public class MiscController { //// http://localhost:8080/lista-filme
     @PostMapping("/filmes/{id}/editar")
     public String atualizarFilme(@PathVariable Integer id,@ModelAttribute("filme") Filmes filme) {
         Filmes filmeExistente = filmesRepository.findById(id).orElse(null);
-
+        
         if (filmeExistente != null) {
 
             filmeExistente.setNome(filme.getNome());
@@ -164,6 +194,41 @@ public class MiscController { //// http://localhost:8080/lista-filme
 
         return "redirect:/lista-filme";
     }
+    
+    @RequestMapping("/preferencias") 
+    public String preferencias(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema,Model model){
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema);
+        return "preferencias"; 
+    }
+    
+    @PostMapping("/preferencias") 
+    public ModelAndView gravaPreferencias(@ModelAttribute Preferencia pref, HttpServletResponse response){ 
+
+        Cookie cookiePrefNome = new Cookie("pref-nome", pref.getNome()); 
+        cookiePrefNome.setDomain("localhost"); //disponível apenas no domínio "localhost" 
+        cookiePrefNome.setHttpOnly(true); //acessível apenas por HTTP, JS não 
+        cookiePrefNome.setMaxAge(86400); //1 dia 
+        
+
+        response.addCookie(cookiePrefNome); 
+
+        Cookie cookiePrefEstilo = new Cookie("pref-estilo", pref.getEstilo()); 
+        cookiePrefEstilo.setDomain("localhost"); //disponível apenas no domínio "localhost" 
+        cookiePrefEstilo.setHttpOnly(true); //acessível apenas por HTTP, JS não 
+        cookiePrefEstilo.setMaxAge(86400); //1 dia 
+
+        response.addCookie(cookiePrefEstilo); 
+
+        return new ModelAndView("redirect:/"); //"index"; 
+    }
+    @RequestMapping("/") 
+    public String index(@CookieValue(name="pref-nome", defaultValue="")String nome, @CookieValue(name="pref-estilo", defaultValue="claro")String tema, Model model){ 
+        model.addAttribute("nome", nome); 
+        model.addAttribute("css", tema); 
+        return "index"; 
+
+    } 
 
 
     // =========================
