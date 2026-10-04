@@ -4,67 +4,64 @@
  */
 package com.api.filmes.controll;
 
-import org.springframework.web.bind.annotation.*; 
+import com.api.filmes.repository.AnaliseRepository;
+import java.util.List; 
 import com.api.filmes.model.Analise;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.springframework.web.bind.annotation.*; 
 
 @RestController 
 @CrossOrigin(origins = "*") 
-@RequestMapping("/analise") 
+@RequestMapping("/analiseRest") // http://localhost:8080/analiseRest/criar
 public class AnaliseController { 
-    private List<Analise> analiseList = new ArrayList<>(); 
-    private int proximoId = 1; 
-
-    @PostMapping("") 
-    public Analise criarAnalise(@RequestBody Analise filme) { 
-        filme.setId(proximoId++); 
-        analiseList.add(filme); 
-        return filme; 
+     private final AnaliseRepository ar;
+    
+    public AnaliseController(AnaliseRepository ar) {
+        this.ar = ar;
     }
 
-    @GetMapping("") 
+    @PostMapping("/criar") 
+    public Analise criarAnalise(@RequestBody Analise analise) { 
+        return ar.save(analise);
+    }
+
+    @GetMapping("/buscar") 
     public List buscarAnalises() { 
-        return analiseList; 
+         return ar.findAll();
     }
 
     @GetMapping("/{id}") 
     public Analise buscarAnalise(@PathVariable int id) { 
-        for (Analise filme : analiseList) { 
-            if (filme.getId() == id) { 
-            return filme; 
-            } 
-        } 
-        return null; 
+        return ar.findById(id).orElse(null);
     } 
+    
+    
     @PutMapping("/{id}") 
     public Analise atualizarAnalise(@PathVariable int id, @RequestBody Analise analise) { 
-        for (int i = 0; i < analiseList.size(); i++) { 
-        Analise t = analiseList.get(i); 
-        if (t.getId() == id) { 
-         
-            t.setId(analise.getId());
-            t.setFilme(analise.getFilme());
-            t.setNota(analise.getNota());
-            t.setAnalise(analise.getAnalise());
-            
-            return t; 
-            } 
-        } 
-        return null; 
+        
+        Analise analiseExistente = ar.findById(id).orElse(null);
+        
+        if (analiseExistente != null) {
+        analiseExistente.setFilme(analise.getFilme());
+        analiseExistente.setAnalise(analise.getAnalise());
+        analiseExistente.setNota(analise.getNota());
+        ar.save(analiseExistente);
+        }
+        return analiseExistente;
+        
     } 
 
     @DeleteMapping("/{id}") 
     public boolean deletarAnalise(@PathVariable int id) { 
-        for (int i = 0; i < analiseList.size(); i++) { 
-        Analise filme = analiseList.get(i); 
-        if (filme.getId() == id) { 
-            analiseList.remove(i); 
-            return true; 
-    } 
-    } 
-        return false; 
+        if (ar.existsById(id)) {
+
+            ar.deleteById(id);
+
+            return true;
+        }
+
+        return false;
     } 
 } 
+
 

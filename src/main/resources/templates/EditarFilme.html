@@ -1,25 +1,25 @@
-    <!DOCTYPE html> 
+<!DOCTYPE html> 
                  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
                 <head> 
-                    <title>Cadastro de Filmes</title> 
+                    <title>Editar Filme</title> 
                 </head> 
                 <body>
                   <header th:insert="navbar.html"></header> 
-                    <h1>Cadastro de Filmes</h1> 
+                    <h1>Editar Filme: <span th:text="${filme.nome}"/></h1> 
                 
-                    <form id="formCadastro"> <!-- th:action="@{/cadastro-filme}" method="post"> -->
+                    <form id="formEditar"> <!--th:action="@{/cadastro-filme}" method="post"> --> 
                         <div> 
-                           
+                           <p>ID: <input id="id"  type="hidden" th:field="${filme.id}" /> </p> 
                            <p>Título: <input id="nome" type="text" th:field="${filme.nome}" /> </p>
                         <p>Sinópse: <input id="sinopse" type="text" th:field="${filme.sinopse}" /> </p>
                         <p>Gênero: <input id="genero" type="text" th:field="${filme.genero}" /> </p> 
                         <p>Data de Lançamento: <input id="data" type="text" th:field="${filme.dataLancamento}" /> </p> 
                         </div> 
-                        <button type="submit">Enviar</button> 
-                    </form>
+                        <button type="submit">Salvar Alterações</button> 
+                    </form> 
                 
                 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-                <script th:src="@{/js/cadastro.js}"></script>
-                    
+                <script th:src="@{/js/atualizar.js}"></script>
+                
                 </body> 
                 </html> 

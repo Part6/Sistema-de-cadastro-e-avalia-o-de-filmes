@@ -3,14 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.api.filmes.model;
-import org.springframework.stereotype.Component; 
+import org.springframework.stereotype.Component;
+import jakarta.persistence.Entity; 
+
+import jakarta.persistence.GeneratedValue; 
+
+import jakarta.persistence.GenerationType; 
+
+import jakarta.persistence.Id; 
 /**
  *
  * @author Desktop
  */
-@Component
+@Entity
 public class Analise {
+    
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private int id;
+   
    private String filme;
    private String analise;
    private int nota;

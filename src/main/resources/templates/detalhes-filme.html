@@ -9,14 +9,46 @@
                    
                     <h1>Ficha Técnica</h1> 
                     <p>Nome do filme: <span th:text="${filme.nome}"/></p> 
-                    <p>ID: <span th:text="${filme.id}" /></p> 
                     <p>Sinópse: <span th:text="${filme.sinopse}" /></p> 
                     <p>Gênero: <span th:text="${filme.genero}" /></p> 
                    <p>Data de Lançamento: <span th:text="${filme.genero}" /></p>
                    
-                   <form th:action="@{/detalhes-filme}" method="post">
-                   <button type="submit">Postar analise</button> 
-                   </form>
+                   
+                   <br/>
+                   
+                    <ul>
+                    <p>Análises Cadastradas:</p> 
+                    <li th:each="analise : ${analises}">
+                        <!-- /analise/{id}  <a th:href="@{/filmes/{id}/editar(id=${filme.id})}"> -->
+                        <a th:href="@{/analise/{id}(id=${analise.id})}" 
+                           
+                           th:text=" 'Análise' + ${analise.id}">
+                        </a>
+
+                        <button type="button"
+                                class="btnExcluirAnalise"
+                                th:data-id="${analise.id}">
+                            Excluir
+                        </button>
+
+                        <a th:href="@{/analise/{id}/editar(id=${analise.id})}">
+                            <button type="button">
+                                Atualizar
+                            </button>
+                        </a>
+
+                    </li> 
+
+                </ul>
+                   
+                   <a th:href="@{/cadastro-analise}"> 
+                            <button type="button">
+                                Postar analise
+                            </button>
+                   </a>
+                   
+                    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+                    <script th:src="@{/js/delete.js}"></script>
                    
                 </body> 
                 </html> 

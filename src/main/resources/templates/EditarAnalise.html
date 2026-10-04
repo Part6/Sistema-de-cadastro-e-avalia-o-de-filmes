@@ -1,0 +1,21 @@
+    <!DOCTYPE html> 
+                 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+                <head> 
+                    <title>Análise do Filme</title> 
+                </head> 
+                <body>
+                   <header th:insert="navbar.html"></header> 
+                    <h1>Análise do Filme</h1> 
+                    <form id="formEditarAnalise"> 
+                        <div> 
+                           <p>ID: <input id="id" type="hidden" th:field="${analise.id}" /> </p> 
+                           <p>Título do filme: <input id="nome" type="text" th:field="${analise.filme}" /> </p>
+                        <p>Análise: <input id="analise" type="text" th:field="${analise.analise}" /> </p>
+                        <p>Nota: <input id="nota" type="text" th:field="${analise.nota}" /> </p> 
+                       
+                        </div> 
+                        <button type="submit">Salvar Alterações</button> 
+                    </form> 
+                </body> 
+                </html> 
+
